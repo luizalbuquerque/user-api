@@ -1,4 +1,4 @@
-# API Authorizer 1.0
+# API USER 1.0
 
 ## Description
 
