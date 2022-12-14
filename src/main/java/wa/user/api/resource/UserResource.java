@@ -40,21 +40,16 @@ public class UserResource {
         return userService.newUser(user);
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<HttpStatus> deleteById(@PathVariable("id") long id) {
-        userRepository.deleteById(id);
+    @DeleteMapping(value = "/{id}")
+    public ResponseEntity<Void> delete(@PathVariable Long id) {
+        userService.delete(id);
+        return ResponseEntity.noContent().build();
+    }
 
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);}
-
-    @PutMapping("/{id}")
-    public ResponseEntity<UserEntity> updateUser(@PathVariable("id") long id, @RequestBody UserEntity userAtualizado) {
-        UserEntity _user = userRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Não foi encontrado o Cartão com id = " + id));
-
-        _user.setName(userAtualizado.getName());
-        _user.setDocument(userAtualizado.getDocument());
-
-        return new ResponseEntity<>(userRepository.save(_user), HttpStatus.OK);
+    @PutMapping(value = "/{id}")
+    public ResponseEntity<UserDTO> update(@PathVariable Long id, @Valid @RequestBody UserDTO dto) {
+        UserDTO newDto = userService.update(id, dto);
+        return ResponseEntity.ok(newDto);
     }
 
 }
