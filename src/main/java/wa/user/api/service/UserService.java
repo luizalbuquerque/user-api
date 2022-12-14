@@ -9,5 +9,5 @@ public interface UserService {
     public List<UserEntity> listUser();
 
     UserDTO newUser(UserDTO user);
-
+    Object findById(Long id);
 }

@@ -3,6 +3,7 @@ package wa.user.api.service.impl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import wa.user.api.dto.UserDTO;
 import wa.user.api.entity.UserEntity;
 import wa.user.api.exeption.BusinessException;
@@ -36,5 +37,12 @@ public class UserServiceImpl implements UserService {
             throw new BusinessException(ConstantUtils.USUARIO_DUPLICADO);
          }
     }
+
+    @Transactional(readOnly = true)
+    public UserEntity findById(Long id) {
+        return userRepository.findById(id)
+                .orElseThrow(() -> new BusinessException(ConstantUtils.USUARIO_NAO_ENCONTRADO));
+    }
+
 
 }

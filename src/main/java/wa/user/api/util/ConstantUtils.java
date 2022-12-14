@@ -7,4 +7,6 @@ public class ConstantUtils {
     }
     public static final String USUARIO_DUPLICADO = "{usuario.validacao.duplicado}";
 
+    public static final String USUARIO_NAO_ENCONTRADO =  "{usuario.validacao.nao.encontrado}";
+
 }
