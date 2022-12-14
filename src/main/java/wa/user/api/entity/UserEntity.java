@@ -13,10 +13,10 @@ public class UserEntity {
     @Column(name = "id_user")
     private Long idUser;
 
-    @Column(unique = true)
+    @Column
     private String name;
 
-    @Column(unique = true)
+    @Column
     private String document;
 
     @Column

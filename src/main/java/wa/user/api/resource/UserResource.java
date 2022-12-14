@@ -4,9 +4,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
+import wa.user.api.dto.UserDTO;
 import wa.user.api.entity.UserEntity;
 import wa.user.api.repository.UserRepository;
 import wa.user.api.service.UserService;
+
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -19,7 +22,6 @@ public class UserResource {
     @Autowired
     private UserRepository userRepository;
 
-
     @GetMapping
     public List<UserEntity> list() {
         return userService.listUser();
@@ -27,8 +29,8 @@ public class UserResource {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public void create() {
-        userService.newUser();
+    public UserDTO newUser(@RequestBody UserDTO user) {
+        return userService.newUser(user);
     }
 
 }
