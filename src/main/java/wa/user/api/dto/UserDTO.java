@@ -13,8 +13,8 @@ import java.time.Instant;
 public class UserDTO {
 
     private String idUser;
-    private String Name;
-    private String Document;
+    private String name;
+    private String document;
     private Instant createdAt;
     private Instant updatedAt;
 }

@@ -1,0 +1,1 @@
+insert into user (created_at, name, document) values (current_date ,'Luiz', '08064120977');

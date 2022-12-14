@@ -1,14 +1,12 @@
 package wa.user.api.resource;
 
-
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-import wa.user.api.dto.UserDTO;
+import org.springframework.web.bind.annotation.*;
+import wa.user.api.entity.UserEntity;
+import wa.user.api.repository.UserRepository;
 import wa.user.api.service.UserService;
-
 import java.util.List;
 
 @RestController
@@ -18,9 +16,19 @@ public class UserResource {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private UserRepository userRepository;
+
+
     @GetMapping
-    public List<UserDTO> list() {
+    public List<UserEntity> list() {
         return userService.listUser();
+    }
+
+    @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
+    public void create() {
+        userService.newUser();
     }
 
 }

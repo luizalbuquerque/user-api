@@ -1,7 +1,6 @@
 package wa.user.api.entity;
 
-import jakarta.persistence.*;
-
+import javax.persistence.*;
 import java.time.Instant;
 import java.util.Objects;
 
@@ -9,14 +8,16 @@ import java.util.Objects;
 @Table(name = "user")
 public class UserEntity {
 
-    @Column
-    private String idUser;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id_user")
+    private Long idUser;
 
-    @Column
-    private String Name;
+    @Column(unique = true)
+    private String name;
 
-    @Column
-    private String Document;
+    @Column(unique = true)
+    private String document;
 
     @Column
     private Instant createdAt;
@@ -26,36 +27,46 @@ public class UserEntity {
 
     public UserEntity(){}
 
-    public UserEntity(String idUser, String name, String document, Instant createdAt, Instant updatedAt) {
+    public UserEntity(Long idUser, String name, String document, Instant createdAt, Instant updatedAt) {
         this.idUser = idUser;
-        Name = name;
-        Document = document;
+        this.name = name;
+        this.document = document;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
     }
 
-    public String getIdUser() {
+    @PrePersist
+    public void prePersist() {
+        createdAt = Instant.now();
+    }
+
+    @PreUpdate
+    public void preUpdate() {
+        updatedAt = Instant.now();
+    }
+
+    public Long getIdUser() {
         return idUser;
     }
 
-    public void setIdUser(String idUser) {
+    public void setIdUser(Long idUser) {
         this.idUser = idUser;
     }
 
     public String getName() {
-        return Name;
+        return name;
     }
 
     public void setName(String name) {
-        Name = name;
+        this.name = name;
     }
 
     public String getDocument() {
-        return Document;
+        return document;
     }
 
     public void setDocument(String document) {
-        Document = document;
+        this.document = document;
     }
 
     public Instant getCreatedAt() {
@@ -74,25 +85,17 @@ public class UserEntity {
         this.updatedAt = updatedAt;
     }
 
-    @PrePersist
-    public void prePersist() {
-        createdAt = Instant.now();
-    }
-
-    @PreUpdate
-    public void preUpdate() {
-        updatedAt = Instant.now();
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof UserEntity that)) return false;
-        return getIdUser().equals(that.getIdUser()) && getName().equals(that.getName()) && getDocument().equals(that.getDocument()) && getCreatedAt().equals(that.getCreatedAt()) && getUpdatedAt().equals(that.getUpdatedAt());
+        if (!(o instanceof UserEntity)) return false;
+        UserEntity that = (UserEntity) o;
+        return Objects.equals(getIdUser(), that.getIdUser()) && Objects.equals(getName(), that.getName()) && Objects.equals(getDocument(), that.getDocument()) && Objects.equals(getCreatedAt(), that.getCreatedAt()) && Objects.equals(getUpdatedAt(), that.getUpdatedAt());
     }
 
     @Override
     public int hashCode() {
         return Objects.hash(getIdUser(), getName(), getDocument(), getCreatedAt(), getUpdatedAt());
     }
+
 }
