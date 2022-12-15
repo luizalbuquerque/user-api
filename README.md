@@ -11,7 +11,7 @@ You can use this API to consume users
 ```http
   You can check if the system was started!
   
-  USE ->  http://localhost:8080/authorizer/health-check
+  USE ->  http://localhost:8080/users/health-check
 ```
 
   ```http
